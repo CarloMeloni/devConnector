@@ -10,10 +10,12 @@ const User = require('../../models/User');
 
 //ROUTE  POST api/user
 //REGISTER USER
+//PUBLIC
+
 router.post('/', [
     check('name', 'Name is required!').not().isEmpty(),
-    check('email', 'Your email is required!').isEmail().not().isEmpty(),
-    check('password', 'A password is required!').isLength({min: 6, max: 20}).not().isEmpty()
+    check('email', 'Your email is required!').isEmail(),
+    check('password', 'A password is required!').isLength({min: 6, max: 20})
 ], async (req, res) => {
     const errors = validationResult(req);
     if(!errors.isEmpty()) {
