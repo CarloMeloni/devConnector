@@ -100,6 +100,8 @@ router.post('/', [auth, [
 
 
 
+
+
 //ROUTE  GET api/profile
 //GET ALL PROFILE
 //PUBLIC
@@ -135,6 +137,32 @@ router.get('/user/:user_id', async (req, res) => {
         res.status(500).send('Server error man!');
     }
 })
+
+
+
+
+
+//ROUTE  DELETE api/profile/user/:user_id
+//DELETE PROFILE, USER AND POSTS
+//PRIVATE
+router.delete('/', auth, async (req, res) => {
+    try {
+        //REMOVE USER POSTS
+
+        //REMOVE PROFILE
+        await Profile.findOneAndRemove({ user: req.user.id });
+
+        //REMOVE USER
+        await User.findOneAndRemove({ _id: req.user.id });
+
+        res.json({ msg: 'User deleted!' });
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server error man!');
+    }
+});
+
+
 
 
 module.exports = router;
